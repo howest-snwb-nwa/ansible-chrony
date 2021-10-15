@@ -25,6 +25,7 @@
   - name: Show chosen NTP server.
     ansible.builtin.debug:
       msg: "NTP server will be {{ ntp_server }}."
+    when: ntp_server is defined
 
   - name: Add time source.
     ansible.builtin.copy:
@@ -35,6 +36,7 @@
       group: root
       mode: '0644'
     notify: reload sources
+    when: ntp_server is defined
 
   # Current line and lines that look like
   # pool 2.debian.pool.ntp.org iburst
@@ -47,6 +49,7 @@
       replace: '# \1'
       backup: true
     notify: restart chronyd 
+    when: ntp_server is defined
 
   - name: Ensure chrony is enabled.
     ansible.builtin.service:
