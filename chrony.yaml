@@ -8,9 +8,7 @@
 
 - name: Chrony configuration.
   gather_facts: true                                # Standaard configuratie is 'true'
-  hosts: howest_proxmox:!panoramix.snwb.howest.be   # Proxmox 7 servers - remote lab
-  vars:
-    ntp_server: ntp.telenet.be
+  hosts: howest_proxmox                             # Proxmox 7 servers - remote lab
 
   handlers:
   - name: reload sources
