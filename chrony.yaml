@@ -43,6 +43,7 @@
       regexp: '^(server.+|pool.+)$'
       replace: '# \1'
       backup: true
+    notify: reload sources
 
   - name: Ensure chrony is enabled.
     ansible.builtin.service:
