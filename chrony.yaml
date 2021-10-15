@@ -11,11 +11,18 @@
       name: chrony
       state: present
 
+  - name: Show chosen NTP server.
+    ansible.builtin.debug:
+      msg: "NTP server will be {{ ntp_server }}."
+
   - name: Add time source.
     ansible.builtin.copy:
       content: |
         server {{ ntp_server }} iburst
       dest: /etc/chrony/sources.d/local.sources
+      owner: root
+      group: root
+      mode: '0644'
 
   - name: Ensure chrony is enabled.
     ansible.builtin.service:
@@ -24,7 +31,4 @@
       state: started                                # Ensure chrony is running now
 
 # TODO: Chrony should use a specific server
-# - voeg file toe in /etc/chrony/sources.d
-# - filenaam moet eindigen op .sources
-# - in die file, enkel peer, pool of server
 # - herstarten van chrony is NIET nodig, enkel commando 'chronyc reload sources' uitvoeren
