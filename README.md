@@ -1,21 +1,41 @@
-# NTP with chrony
+chrony
+=========
 
-## Variables
+Basic playbook as an exercise in:
 
-* `ntp_server`: Contains the chosen NTP server. Set this variable as a host\_var or group\_var.
+* simple variables
+* handlers
+* commenting lines in files (replacing)
+* conditions
 
-## Example
+This playbook will:
 
-Setting the variable in an inventory:
+* install [chrony](https://chrony.tuxfamily.org/) on one or more GNU/Linux hosts
+* erase (uncomment) the current ntp servers or pools unless no `ntp_server` variable is found
+* use an ntp server, defined by you by setting the `ntp_server` variable
+
+Variables
+--------------
+
+* `ntp_server`: Contains the chosen upstream NTP server. Set this variable as a host\_var or group\_var.
+
+Set this to your ISP's NTP server. (Probably **ntp.telenet.be** or **ntp.skynet.be**)
+
+Example of setting the variable in an ini-style inventory:
 
 ```ini
-[howest_proxmox:vars]
+[mygroup:vars]
 ntp_server: ntp.howest.be
 ```
 
-or in a group\_vars file (howest\_proxmox.yaml):
+Example of setting the variable in a host\_vars or group\_vars file:
 
 ```YAML
 ---
 ntp_server: ntp.howest.be
 ```
+
+Usage
+--------------
+
+Log in on the nodes as **root**, or make use of the [become](https://docs.ansible.com/ansible/latest/user_guide/become.html) plugin.
