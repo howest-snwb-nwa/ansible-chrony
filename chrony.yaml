@@ -5,6 +5,11 @@
   hosts: howest_proxmox:!panoramix.snwb.howest.be   # Proxmox 7 servers - remote lab
   vars:
     ntp_server: ntp.telenet.be
+
+  handlers:
+  - name: reload sources
+    ansible.builtin.command: /usr/bin/chronyc reload sources
+
   tasks:
   - name: Ensure chrony is installed.
     ansible.builtin.package:
@@ -23,6 +28,7 @@
       owner: root
       group: root
       mode: '0644'
+    notify: reload sources
 
   - name: Ensure chrony is enabled.
     ansible.builtin.service:
