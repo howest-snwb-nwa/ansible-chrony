@@ -36,5 +36,3 @@
       enabled: true                                 # Enable at boot
       state: started                                # Ensure chrony is running now
 
-# TODO: Chrony should use a specific server
-# - herstarten van chrony is NIET nodig, enkel commando 'chronyc reload sources' uitvoeren
