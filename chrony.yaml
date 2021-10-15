@@ -3,11 +3,19 @@
 - name: Chrony configuration.
   gather_facts: true                                # Standaard configuratie is 'true'
   hosts: howest_proxmox:!panoramix.snwb.howest.be   # Proxmox 7 servers - remote lab
+  vars:
+    ntp_server: ntp.telenet.be
   tasks:
   - name: Ensure chrony is installed.
     ansible.builtin.package:
       name: chrony
       state: present
+
+  - name: Add time source.
+    ansible.builtin.copy:
+      content: |
+        server {{ ntp_server }} iburst
+      dest: /etc/chrony/sources.d/local.sources
 
   - name: Ensure chrony is enabled.
     ansible.builtin.service:
@@ -16,3 +24,7 @@
       state: started                                # Ensure chrony is running now
 
 # TODO: Chrony should use a specific server
+# - voeg file toe in /etc/chrony/sources.d
+# - filenaam moet eindigen op .sources
+# - in die file, enkel peer, pool of server
+# - herstarten van chrony is NIET nodig, enkel commando 'chronyc reload sources' uitvoeren
