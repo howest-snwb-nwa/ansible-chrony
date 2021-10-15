@@ -1,5 +1,10 @@
 ---
 # Exercise: add chrony and configure with NTP server of choice
+#
+# TODO: Change settings to that ntp_server is the ONLY used server
+#   - remove existing NTP server
+# TODO: Ensure nodes can use different NTP servers, based on their group
+
 - name: Chrony configuration.
   gather_facts: true                                # Standaard configuratie is 'true'
   hosts: howest_proxmox:!panoramix.snwb.howest.be   # Proxmox 7 servers - remote lab
