@@ -33,6 +33,17 @@
       mode: '0644'
     notify: reload sources
 
+  # Current line and lines that look like
+  # pool 2.debian.pool.ntp.org iburst
+  # Should be commented
+  # So, everything that startes with 'pool' or 'server'
+  - name: Ensure no existing time sources are present.
+    ansible.builtin.replace:
+      path: /etc/chrony/chrony.conf
+      regexp: '^(server.+|pool.+)$'
+      replace: '# \1'
+      backup: true
+
   - name: Ensure chrony is enabled.
     ansible.builtin.service:
       name: chronyd.service
