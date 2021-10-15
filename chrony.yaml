@@ -1,8 +1,6 @@
 ---
 # Exercise: add chrony and configure with NTP server of choice
 #
-# TODO: Change settings to that ntp_server is the ONLY used server
-#   - remove existing NTP server
 # TODO: Ensure a default setting when the admin forgets to set ntp_server
 
 - name: Chrony configuration.
