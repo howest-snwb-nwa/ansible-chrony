@@ -27,7 +27,6 @@
     - name: Show chosen NTP server.
       ansible.builtin.debug:
         msg: "NTP server will be {{ ntp_server }}."
-      # TODO: use assert as module
 
     - name: Add time source.
       ansible.builtin.copy:
