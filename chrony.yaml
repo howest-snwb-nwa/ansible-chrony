@@ -8,3 +8,6 @@
     ansible.builtin.package:
       name: chrony
       state: present
+
+# TODO: Chrony should run on boot
+# TODO: Chrony should use a specific server
