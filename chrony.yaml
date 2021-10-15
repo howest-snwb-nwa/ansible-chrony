@@ -1,5 +1,6 @@
 ---
 # Exercise: add chrony and configure with NTP server of choice
 - name: Chrony configuration.
-  gather_facts: true          # Standaard configuratie is 'true'
-  hosts: howest_proxmox       # Proxmox 7 servers
+  gather_facts: true                                    # Standaard configuratie is 'true'
+  hosts: howest_proxmox:!panoramix.snwb.howest.be       # Proxmox 7 servers - remote lab
+
