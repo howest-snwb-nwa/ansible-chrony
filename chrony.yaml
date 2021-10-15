@@ -3,4 +3,8 @@
 - name: Chrony configuration.
   gather_facts: true                                    # Standaard configuratie is 'true'
   hosts: howest_proxmox:!panoramix.snwb.howest.be       # Proxmox 7 servers - remote lab
-
+  tasks:
+  - name: Ensure chrony is installed.
+    ansible.builtin.package:
+      name: chrony
+      state: present
