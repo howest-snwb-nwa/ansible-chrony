@@ -13,6 +13,11 @@
   - name: reload sources
     ansible.builtin.command: /usr/bin/chronyc reload sources
 
+  - name: restart chronyd
+    ansible.builtin.service:
+      name: chronyd.sources
+      state: restarted
+
   tasks:
   - name: Ensure chrony is installed.
     ansible.builtin.package:
@@ -43,7 +48,7 @@
       regexp: '^(server.+|pool.+)$'
       replace: '# \1'
       backup: true
-    notify: reload sources
+    notify: restart chronyd 
 
   - name: Ensure chrony is enabled.
     ansible.builtin.service:
