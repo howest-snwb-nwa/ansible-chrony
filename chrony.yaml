@@ -22,34 +22,34 @@
       name: chrony
       state: present
 
-  - name: Show chosen NTP server.
-    ansible.builtin.debug:
-      msg: "NTP server will be {{ ntp_server }}."
-    when: ntp_server is defined
-    # TODO: use assert as module
+  - name: Make use of upstream NTP server.
+    block:
+    - name: Show chosen NTP server.
+      ansible.builtin.debug:
+        msg: "NTP server will be {{ ntp_server }}."
+      # TODO: use assert as module
 
-  - name: Add time source.
-    ansible.builtin.copy:
-      content: |
-        server {{ ntp_server }} iburst
-      dest: /etc/chrony/sources.d/local.sources
-      owner: root
-      group: root
-      mode: '0644'
-    notify: reload sources
-    when: ntp_server is defined
+    - name: Add time source.
+      ansible.builtin.copy:
+        content: |
+          server {{ ntp_server }} iburst
+        dest: /etc/chrony/sources.d/local.sources
+        owner: root
+        group: root
+        mode: '0644'
+      notify: reload sources
 
-  # Current line and lines that look like
-  # pool 2.debian.pool.ntp.org iburst
-  # Should be commented
-  # So, everything that startes with 'pool' or 'server'
-  - name: Ensure no existing time sources are present.
-    ansible.builtin.replace:
-      path: /etc/chrony/chrony.conf
-      regexp: '^(server.+|pool.+)$'
-      replace: '# \1'
-      backup: true
-    notify: restart chronyd 
+    # Current line and lines that look like
+    # pool 2.debian.pool.ntp.org iburst
+    # Should be commented
+    # So, everything that startes with 'pool' or 'server'
+    - name: Ensure no existing time sources are present.
+      ansible.builtin.replace:
+        path: /etc/chrony/chrony.conf
+        regexp: '^(server.+|pool.+)$'
+        replace: '# \1'
+        backup: true
+      notify: restart chronyd 
     when: ntp_server is defined
 
   - name: Ensure chrony is enabled.
@@ -57,4 +57,3 @@
       name: chronyd.service
       enabled: true                                 # Enable at boot
       state: started                                # Ensure chrony is running now
-
